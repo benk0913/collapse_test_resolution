@@ -2,21 +2,24 @@
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Collapse.Blocks {
+namespace Collapse.Blocks
+{
     /**
      * Block behavior - default handling of inputs, triggers and animations
      */
-    public abstract class Block : MonoBehaviour {
+    public abstract class Block : MonoBehaviour
+    {
         // Public props used by BoardManager
         public BlockType Type;
         public Vector2Int GridPosition;
 
         protected bool IsTriggered;
-        
+
         /**
          * Start
          */
-        private void Start() {
+        private void Start()
+        {
             transform.localScale = Vector3.zero;
             transform.DOScale(Vector3.one, .2f).SetDelay(Random.value * .3f);
         }
@@ -24,7 +27,8 @@ namespace Collapse.Blocks {
         /**
          * OnMouseEnter
          */
-        private void OnMouseEnter() {
+        private void OnMouseEnter()
+        {
             if (IsTriggered) return;
             transform.DOKill();
             transform.DOScale(Vector3.one * 1.2f, .1f).SetEase(Ease.OutQuad);
@@ -33,7 +37,8 @@ namespace Collapse.Blocks {
         /**
          * OnMouseExit
          */
-        private void OnMouseExit() {
+        private void OnMouseExit()
+        {
             if (IsTriggered) return;
             transform.DOKill();
             transform.DOScale(Vector3.one, .1f).SetEase(Ease.OutQuad);
@@ -42,7 +47,8 @@ namespace Collapse.Blocks {
         /**
          * OnMouseUp
          */
-        protected virtual void OnMouseUp() {
+        protected virtual void OnMouseUp()
+        {
             if (IsTriggered) return;
             BoardManager.Instance.TriggerMatch(this);
         }
@@ -50,16 +56,18 @@ namespace Collapse.Blocks {
         /**
          * Trigger the block
          */
-        public virtual void Triger(float delay) {
+        public virtual void Trigger(float delay)
+        {
             if (IsTriggered) return;
             IsTriggered = true;
-            
+
             // Clear from board
             BoardManager.Instance.ClearBlockFromGrid(this);
-            
+
             // Kill game object
             transform.DOKill();
             Destroy(gameObject);
         }
+
     }
 }

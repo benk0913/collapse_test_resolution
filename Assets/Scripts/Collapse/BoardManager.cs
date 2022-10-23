@@ -45,7 +45,6 @@ namespace Collapse {
         private void Start() {
             // Fill board on start
             ScheduleRegenerateBoard();
-            Debug.Log("Remove me for bonus points!");
         }
 
         /**
@@ -109,7 +108,6 @@ namespace Collapse {
         private void ScheduleRegenerateBoard() {
             if (scheduledRegeneration != null) {
                 StopCoroutine(scheduledRegeneration);
-                scheduledRegeneration = null;
             }
             scheduledRegeneration = StartCoroutine(RegenerateBoard());
         }
